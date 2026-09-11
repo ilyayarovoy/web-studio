@@ -13,6 +13,9 @@ export function createRenderer({ canvas }: RendererOptions): Renderer {
     throw new Error("Failed to get 2D context");
   }
 
+  // TypeScript type narrowing: ctx is guaranteed to be non-null after the check above
+  const context: CanvasRenderingContext2D = ctx;
+
   let animationId: number | null = null;
   let particles: Particle[] = [];
   let mouseX = 0;
@@ -36,7 +39,7 @@ export function createRenderer({ canvas }: RendererOptions): Renderer {
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
-    ctx.scale(dpr, dpr);
+    context.scale(dpr, dpr);
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
 
@@ -103,10 +106,10 @@ export function createRenderer({ canvas }: RendererOptions): Renderer {
 
   function drawParticles() {
     particles.forEach((particle) => {
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(161, 255, 98, ${particle.opacity})`;
-      ctx.fill();
+      context.beginPath();
+      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      context.fillStyle = `rgba(161, 255, 98, ${particle.opacity})`;
+      context.fill();
     });
   }
 
@@ -114,7 +117,7 @@ export function createRenderer({ canvas }: RendererOptions): Renderer {
     const blackHoleX = mouseX || centerX;
     const blackHoleY = mouseY || centerY;
 
-    const gradient = ctx.createRadialGradient(
+    const gradient = context.createRadialGradient(
       blackHoleX,
       blackHoleY,
       0,
@@ -126,15 +129,15 @@ export function createRenderer({ canvas }: RendererOptions): Renderer {
     gradient.addColorStop(0.5, "rgba(104, 64, 255, 0.3)");
     gradient.addColorStop(1, "rgba(161, 255, 98, 0)");
 
-    ctx.beginPath();
-    ctx.arc(blackHoleX, blackHoleY, 80, 0, Math.PI * 2);
-    ctx.fillStyle = gradient;
-    ctx.fill();
+    context.beginPath();
+    context.arc(blackHoleX, blackHoleY, 80, 0, Math.PI * 2);
+    context.fillStyle = gradient;
+    context.fill();
   }
 
   function render() {
-    ctx.fillStyle = "#151313";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#151313";
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     updateParticles();
     drawBlackHole();
