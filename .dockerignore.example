@@ -1,0 +1,22 @@
+# Этот файл уже создан как .dockerignore
+# Дополнительные исключения можно добавить здесь
+
+# Secrets (ВАЖНО!)
+.env*.local
+.env
+**/*.key
+**/*.pem
+**/credentials.json
+
+# Development
+.git
+.vscode
+.idea
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Documentation (если не нужна в образе)
+*.md
+docs/
