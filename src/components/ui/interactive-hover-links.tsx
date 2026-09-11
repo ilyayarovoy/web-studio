@@ -47,7 +47,7 @@ interface LinkProps {
 }
 
 function Link({ heading, imgSrc, subheading, href, onClick }: LinkProps) {
-  const ref = useRef<HTMLAnchorElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -59,7 +59,7 @@ function Link({ heading, imgSrc, subheading, href, onClick }: LinkProps) {
   const left = useTransform(mouseXSpring, [0.5, -0.5], ["60%", "40%"]);
 
   const handleMouseMove = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     const rect = ref.current!.getBoundingClientRect();
 
